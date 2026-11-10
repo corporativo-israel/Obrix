@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Obrix | Orçamento de obra</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23121516'/%3E%3Cg fill='none' stroke='%23e8ebe9' stroke-width='13'%3E%3Cpath transform='translate(4 0)' d='M24.1 47.5A26 26 0 0 1 75.9 47.5'/%3E%3Cpath transform='translate(-4 0)' d='M24.1 52.5A26 26 0 0 0 75.9 52.5'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+:root{box-sizing:border-box;--bg:#e6e8e6;--sf:#f4f5f3;--ink:#1c2022;--mut:#656d70;--ac:#3f5d61;--acx:#fff;--hl:#d1d5d3;--tint:#dde1df;--fld:#eef0ee;--glass:rgba(244,245,243,.74);--nz:.3;--sh:0 12px 34px rgba(20,28,30,.14)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121516;--sf:#1b1f20;--ink:#e8ebe9;--mut:#9aa3a5;--ac:#9bbcc0;--acx:#101314;--hl:#2a3032;--tint:#1d2224;--fld:#171b1c;--glass:rgba(27,31,32,.72);--nz:.12;--sh:0 12px 34px rgba(0,0,0,.45)}}
+:root[data-theme="dark"]{--bg:#121516;--sf:#1b1f20;--ink:#e8ebe9;--mut:#9aa3a5;--ac:#9bbcc0;--acx:#101314;--hl:#2a3032;--tint:#1d2224;--fld:#171b1c;--glass:rgba(27,31,32,.72);--nz:.12;--sh:0 12px 34px rgba(0,0,0,.45)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;padding-bottom:130px;background:var(--bg);color:var(--ink);font:16px/1.5 'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;transition:background .4s,color .4s}
+.hero{position:relative;min-height:90svh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 20px 64px;overflow:hidden;isolation:isolate}
+.hero .bg{position:absolute;inset:-20% 0 -10%;z-index:-2;background:radial-gradient(120% 80% at 75% 0,var(--sf),transparent 62%),var(--tint);transform:translate3d(0,calc(var(--y,0)*.18px),0)}
+.hero .bg::after{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:var(--nz);mix-blend-mode:multiply}
+.plan{position:absolute;z-index:-1;top:calc(env(safe-area-inset-top,0px) + 76px);right:-6%;width:min(94%,540px);color:var(--ink);opacity:.3;transform:translate3d(0,calc(var(--y,0)*-.12px),0)}
+.plan path{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 2.4s cubic-bezier(.6,0,.2,1) forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+.txt{position:relative;width:100%;max-width:640px;margin:0 auto;transform:translate3d(0,calc(var(--y,0)*-.08px),0);opacity:max(0,calc(1 - var(--y,0)/520))}
+.k{font-size:15px;font-weight:500;color:var(--mut);margin-bottom:6px}
+.big{font-size:clamp(46px,15vw,104px);line-height:1;font-weight:300;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.cap{margin-top:14px;color:var(--mut);font-size:15px}
+main{max-width:640px;margin:0 auto;padding:0 20px}
+h2{font-size:clamp(26px,6vw,34px);font-weight:600;letter-spacing:-.025em;line-height:1.15;margin:84px 0 20px}
+#fic h2{font-size:18px;margin:26px 0 6px;letter-spacing:-.01em}
+.lead,.note{color:var(--mut);font-size:14px;margin:0 0 12px;max-width:60ch}
+.card{background:transparent;border:0;padding:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:14px}
+label{display:block;font-size:13px;font-weight:500;color:var(--mut)}
+input,select{width:100%;min-height:50px;margin-top:5px;padding:8px 14px;font:inherit;font-size:17px;font-weight:500;border:1px solid var(--hl);border-radius:14px;background:var(--fld);color:var(--ink);font-variant-numeric:tabular-nums;transition:border-color .2s,box-shadow .2s}
+input:hover,select:hover{border-color:var(--mut)}
+input:focus,select:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 4px color-mix(in srgb,var(--ac) 22%,transparent)}
+button:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+input.nm{font-weight:600;max-width:240px;margin:0}
+input[type=checkbox]{width:22px;min-height:22px;height:22px;margin:0 10px 0 0;accent-color:var(--ac)}
+.ck{display:flex;align-items:center;font-size:15px;font-weight:500;color:var(--ink);min-height:40px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.rh{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:6px 0 4px}
+button{font:inherit;cursor:pointer;transition:transform .2s,background .2s}
+button:active{transform:scale(.97)}
+.pri{min-height:54px;padding:0 26px;border:0;border-radius:999px;background:var(--ac);color:var(--acx);font-weight:600}
+.noprint>.pri{width:100%;margin-top:10px}
+.sec{min-height:40px;padding:0 16px;border:0;border-radius:999px;background:var(--tint);color:var(--ink);font-size:14px;font-weight:600}
+.sec:hover{background:var(--hl)}
+summary{cursor:pointer;font-weight:600;min-height:32px}
+.adv{margin-top:16px}
+.rm{border-top:1px solid var(--hl)}
+.rs{display:flex;align-items:center;gap:14px;padding:16px 0;list-style:none}
+.rs::-webkit-details-marker{display:none}
+.rs::after{content:'';width:8px;height:8px;border-right:2px solid var(--mut);border-bottom:2px solid var(--mut);transform:rotate(45deg);margin:0 4px 0 2px;flex:none;transition:transform .3s}
+.rm[open]>.rs::after{transform:rotate(-135deg)}
+.ic{flex:none;width:44px;height:44px;border-radius:14px;background:var(--tint);color:var(--ac);display:grid;place-items:center;font-style:normal;font-weight:700}
+.rt{flex:1;min-width:0}.rt b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rt small{color:var(--mut);font-size:13px}
+.rc{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rb{padding:0 0 20px}.rb .grid{margin-top:14px}
+.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
+th{font-size:13px;font-weight:500;color:var(--mut);text-align:left}
+th,td{padding:12px 4px;border-bottom:1px solid var(--hl);text-align:left}td input{margin:0;width:100px;min-height:40px}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin:12px 0 18px}
+.kpi div{font-size:13px;color:var(--mut)}.kpi b{display:block;font-size:24px;font-weight:600;letter-spacing:-.02em;color:var(--ink)}
+.tot{font-size:30px;font-weight:300;letter-spacing:-.03em;text-align:right;margin-top:16px}
+.lg{position:absolute;z-index:2;top:calc(env(safe-area-inset-top,0px) + 12px);left:20px;min-height:38px;display:flex;align-items:center;gap:10px;color:var(--ink);font:600 25px/1 'Sora',system-ui,sans-serif;letter-spacing:-.05em}
+.tg{position:fixed;z-index:20;top:calc(env(safe-area-inset-top,0px) + 12px);right:14px;min-height:38px;padding:0 16px;border:1px solid var(--hl);border-radius:999px;background:var(--glass);color:var(--ink);font-size:13px;font-weight:600;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.dock{position:fixed;z-index:20;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 24px));display:flex;align-items:center;gap:8px;padding:8px 8px 8px 22px;border:1px solid var(--hl);border-radius:999px;background:var(--glass);-webkit-backdrop-filter:blur(20px) saturate(1.5);backdrop-filter:blur(20px) saturate(1.5);box-shadow:var(--sh);transform:translate(-50%,160%);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.dock.show{transform:translate(-50%,0)}
+.dt{flex:1;min-width:0}.dt small{display:block;font-size:11.5px;font-weight:500;color:var(--mut);line-height:1.1}.dt b{font-size:20px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pill{min-height:44px;padding:0 16px;display:grid;place-items:center;border-radius:999px;color:var(--ink);text-decoration:none;font-size:14px;font-weight:600}
+.pill.solid{background:var(--ac);color:var(--acx)}
+.js .rv{opacity:0;transform:translateY(28px);transition:opacity .9s,transform .9s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.plan path{stroke-dashoffset:0}.js .rv{opacity:1;transform:none}}
+@media print{#fic::before{content:'Obrix';display:block;font:600 28px 'Sora',sans-serif;letter-spacing:-.05em;margin-bottom:10px}.noprint,.dock,.tg,.hero{display:none!important}body{background:#fff;color:#000;padding:0}.js .rv{opacity:1;transform:none}}
+</style><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&family=Sora:wght@600&display=swap"></head><body><section class="hero"><div class="bg"></div><div class="lg"><svg width="38" height="38" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="15"><path transform="translate(5 0)" d="M20.1 47.5A30 30 0 0 1 79.9 47.5"/><path transform="translate(-5 0)" d="M20.1 52.5A30 30 0 0 0 79.9 52.5"/></g></svg><span>Obrix</span></div><svg class="plan" viewBox="0 0 400 300" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true"><path pathLength="1" style="animation-delay:0.1s" d="M20 20H380V280H20Z"/><path pathLength="1" style="animation-delay:0.7s" d="M20 150H180"/><path pathLength="1" style="animation-delay:0.9s" d="M180 20V200"/><path pathLength="1" style="animation-delay:1.1s" d="M260 150H380"/><path pathLength="1" style="animation-delay:1.3s" d="M260 150V280"/><path pathLength="1" style="animation-delay:1.6s" d="M180 200A36 36 0 0 1 216 164"/></svg><div class="txt"><div class="k">Orçamento de obra</div><div class="big" id="ht">R$ 0,00</div><div class="cap" id="hs"></div></div></section>
+<button class="tg noprint" id="tg" aria-label="Alterar tema">Auto</button>
+<nav class="dock noprint" id="dock"><div class="dt"><small>Total da obra</small><b id="bt">R$ 0,00</b></div><a class="pill" href="#and">Cômodos</a><a class="pill solid" href="#fic">Ficha</a></nav>
+<main>
+<h2 class="noprint">Dados da obra</h2>
+<div class="noprint" id="cfg"></div>
+<h2 class="noprint">Preços da região</h2>
+<details class="card noprint"><summary>Ver e editar preços</summary><p class="lead" style="margin-top:8px">Valores de referência aproximados, ajustados por estado. Para um orçamento oficial, troque pelos preços do SINAPI ou da loja da sua cidade.</p><div class="scroll"><table><tbody id="prc"></tbody></table></div><div class="row"><button class="sec" id="rst">Restaurar preços do estado</button></div></details>
+<h2 class="noprint">Andares e cômodos</h2>
+<div class="noprint"><div id="and"></div><button class="pri" data-act="addAnd">Adicionar andar</button></div>
+<h2>Ficha da obra</h2>
+<div class="card" id="fic"></div>
+<div class="row noprint"><button class="sec" id="cp">Copiar para WhatsApp</button><button class="sec" onclick="window.print()">Imprimir ou salvar PDF</button><button class="sec" id="rs">Nova obra</button></div>
+
+<script>
+var BASE={tj:0.95,ci:36,ar:130,ca:18,ce:45,ac:22,rj:8,ti:380};
+var LB={tj:['Tijolo/bloco','un'],ci:['Cimento (50 kg)','saco'],ar:['Areia','m³'],ca:['Cal hidratada (20 kg)','saco'],ce:['Cerâmica/piso','m²'],ac:['Argamassa colante (20 kg)','saco'],rj:['Rejunte','kg'],ti:['Tinta (lata 18 L)','lata']};
+var K=Object.keys(BASE);
+var UF={SP:1,RJ:1.02,MG:.95,PR:.97,RS:1,SC:1.01,GO:.94,DF:1.03,BA:.92,PE:.93,CE:.92,PA:.95,Outro:1};
+var PRE={'Quarto':[3,3.5],'Sala':[4,5],'Cozinha':[3,3],'Banheiro':[2,2.5],'Corredor':[1.2,4],'Área de serviço':[2,2.5],'Garagem':[3,5]};
+var up=function(x){return Math.ceil(x-1e-9)};
+var f2=function(n){return n.toLocaleString('pt-BR',{maximumFractionDigits:2})};
+var brl=function(n){return 'R$ '+n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})};
+var esc=function(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')};
+function room(n,c,l){return{nm:n,c:c,l:l,h:2.8,po:1,ja:1,reb:2,alv:1,piso:1}}
+function fresh(){return{nome:'',uf:'SP',perda:10,bloco:25,dem:2,teto:1,esp:2,cx:2,porta:1.6,jan:1.2,pr:{},andares:[{n:'Térreo',cs:[room('Sala',4,5),room('Quarto',3,3.5)]}]}}
+var S=fresh();try{var s0=JSON.parse(localStorage.getItem('obra2')||'null');if(s0&&s0.andares)S=s0}catch(e){}
+function save(){try{localStorage.setItem('obra2',JSON.stringify(S))}catch(e){}}
+function pr(k){return S.pr[k]!=null?S.pr[k]:Math.round(BASE[k]*(UF[S.uf]||1)*100)/100}
+
+/* configuração */
+var CF=[['nome','Nome da obra','text'],['uf','Estado',Object.keys(UF).map(function(k){return[k,k]})],['perda','Perda/sobra (%)','number'],
+['bloco','Tipo de tijolo',[['Tijolo 9x19x19 (25/m²)',25],['Tijolo 9x14x19 (33/m²)',33.3],['Bloco concreto 14x19x39 (12,5/m²)',12.5]]],
+['dem','Demãos de tinta','number'],['teto','Pintar teto',[['Sim',1],['Não',0]]],['esp','Espessura reboco (cm)','number'],['cx','m² por caixa de piso','number'],
+['porta','Área de cada porta (m²)','number'],['jan','Área de cada janela (m²)','number']];
+function cfg(){var _h=CF.map(function(c){var v=S[c[0]];
+if(Array.isArray(c[2]))return'<label>'+c[1]+'<select data-g="'+c[0]+'">'+c[2].map(function(o){return'<option value="'+o[1]+'"'+(String(o[1])==String(v)?' selected':'')+'>'+o[0]+'</option>'}).join('')+'</select></label>';
+return'<label>'+c[1]+'<input data-g="'+c[0]+'" type="'+c[2]+'" '+(c[2]=='number'?'min="0" inputmode="decimal" ':'')+'step="any" value="'+esc(v)+'"></label>'});document.getElementById('cfg').innerHTML='<div class="grid">'+_h.slice(0,3).join('')+'</div><details class="adv"><summary>Ajustes avançados</summary><div class="grid" style="margin-top:14px">'+_h.slice(3).join('')+'</div></details>'}
+function prices(){document.getElementById('prc').innerHTML=K.map(function(k){return'<tr><td>'+LB[k][0]+'</td><td>R$/'+LB[k][1]+'</td><td><input data-p="'+k+'" type="number" min="0" inputmode="decimal" step="any" value="'+pr(k)+'"></td></tr>'}).join('')}
+
+/* andares/cômodos */
+function rooms(){var h='';S.andares.forEach(function(a,ai){
+h+='<div class="card"><div class="rh"><input class="nm" data-a="'+ai+'" data-k="n" value="'+esc(a.n)+'" style="max-width:220px"><button class="sec" data-act="delAnd" data-a="'+ai+'">Remover andar</button></div>';
+a.cs.forEach(function(r,ri){var d='data-a="'+ai+'" data-r="'+ri+'" ';
+var N=function(k,l){return'<label>'+l+'<input '+d+'data-k="'+k+'" type="number" min="0" inputmode="decimal" step="any" value="'+r[k]+'"></label>'};
+h+='<details class="rm"'+(r.op?' open':'')+' data-a="'+ai+'" data-r="'+ri+'"><summary class="rs"><i class="ic" id="ic-'+ai+'-'+ri+'"></i><span class="rt"><b id="rn-'+ai+'-'+ri+'"></b><small id="ri-'+ai+'-'+ri+'"></small></span><span class="rc" id="rc-'+ai+'-'+ri+'"></span></summary><div class="rb"><label>Nome do cômodo<input '+d+'data-k="nm" value="'+esc(r.nm)+'"></label>'
++'<div class="grid">'+N('c','Comprimento (m)')+N('l','Largura (m)')+N('h','Pé-direito (m)')+N('po','Portas')+N('ja','Janelas')
++'<label>Reboco<select '+d+'data-k="reb"><option value="0"'+(r.reb==0?' selected':'')+'>Nenhum</option><option value="1"'+(r.reb==1?' selected':'')+'>Só interno</option><option value="2"'+(r.reb==2?' selected':'')+'>Interno + externo</option></select></label></div>'
++'<div class="row"><label class="ck"><input type="checkbox" '+d+'data-k="alv"'+(r.alv?' checked':'')+'>Construir paredes</label><label class="ck"><input type="checkbox" '+d+'data-k="piso"'+(r.piso?' checked':'')+'>Piso cerâmico</label><button class="sec" data-act="dup" '+d+'>Duplicar</button><button class="sec" data-act="del" '+d+'>Remover</button></div></div></details>'});
+h+='<div class="row"><select id="ps'+ai+'" style="max-width:190px">'+Object.keys(PRE).map(function(k){return'<option>'+k+'</option>'}).join('')+'</select><button class="sec" data-act="addR" data-a="'+ai+'">Adicionar cômodo</button></div></div>'});
+document.getElementById('and').innerHTML=h}
+
+/* cálculo */
+function calc(){var P=1+S.perda/100,T={},R=[],A={pa:0,pi:0};K.forEach(function(k){T[k]=0});
+S.andares.forEach(function(a,ai){a.cs.forEach(function(r,ri){
+var br=2*(r.c+r.l)*r.h,li=Math.max(br-r.po*S.porta-r.ja*S.jan,0),alv=r.alv?li:0,rb=li*r.reb,ag=(alv*0.02+rb*S.esp/100)*P,pi=r.piso?r.c*r.l:0,pt=li+(S.teto?r.c*r.l:0);
+var q={tj:alv*S.bloco*P,ci:ag*4.6,ar:ag*1.1,ca:ag*2,ce:pi*P,ac:pi*5/20*P,rj:pi*0.3,ti:pt*S.dem/10*P/18},cost=0;
+K.forEach(function(k){T[k]+=q[k];cost+=q[k]*pr(k)});R.push({ai:ai,ri:ri,a:a.n,n:r.nm,pi:pi,li:li,cost:cost});A.pa+=li;A.pi+=pi})});
+var B={tj:up(T.tj),ci:up(T.ci),ar:up(T.ar*10)/10,ca:up(T.ca),ce:S.cx>0?up(T.ce/S.cx)*S.cx:up(T.ce),ac:up(T.ac),rj:up(T.rj),ti:up(T.ti)};
+var tot=0;K.forEach(function(k){tot+=B[k]*pr(k)});return{B:B,R:R,A:A,tot:tot}}
+var CUR;
+function ficha(){var c=CUR=calc(),h='<div class="note">'+(S.nome?esc(S.nome)+', ':'')+'estado '+S.uf+', perda de '+S.perda+'%</div>'
++'<div class="kpi"><div>Área de piso<b>'+f2(c.A.pi)+' m²</b></div><div>Área de parede<b>'+f2(c.A.pa)+' m²</b></div><div>Custo por m² de piso<b>'+(c.A.pi?brl(c.tot/c.A.pi):'—')+'</b></div></div>'
++'<div class="scroll"><table><thead><tr><th>Material</th><th>Qtd</th><th>R$ unit.</th><th>Subtotal</th></tr></thead><tbody>'
++K.filter(function(k){return c.B[k]>0}).map(function(k){return'<tr><td>'+LB[k][0]+'</td><td>'+f2(c.B[k])+' '+LB[k][1]+'</td><td>'+brl(pr(k))+'</td><td>'+brl(c.B[k]*pr(k))+'</td></tr>'}).join('')+'</tbody></table></div>'
++'<div class="tot">Total: '+brl(c.tot)+'</div><h2 style="margin-top:16px">Por cômodo (custo estimado)</h2><div class="scroll"><table><thead><tr><th>Cômodo</th><th>Piso</th><th>Parede</th><th>Custo</th></tr></thead><tbody>'
++c.R.map(function(r){return'<tr><td>'+esc(r.a)+', '+esc(r.n)+'</td><td>'+f2(r.pi)+' m²</td><td>'+f2(r.li)+' m²</td><td>'+brl(r.cost)+'</td></tr>'}).join('')+'</tbody></table></div>'
++'<div class="note" style="margin-top:8px">Estimativa de materiais (alvenaria, reboco, piso e tinta). Não inclui estrutura, telhado, elétrica, hidráulica nem mão de obra. Paredes compartilhadas entre cômodos são contadas em cada um (leve sobra).</div>';
+document.getElementById('fic').innerHTML=h;c.R.forEach(function(r){var k=r.ai+'-'+r.ri,g=function(i){return document.getElementById(i+'-'+k)};if(g('ri')){g('rn').textContent=r.n||'Cômodo';g('ic').textContent=(r.n||'?').charAt(0).toUpperCase();g('ri').textContent=f2(r.pi)+' m² de piso';g('rc').textContent=brl(r.cost)}});setTot(c.tot);document.getElementById('hs').textContent='Total estimado em '+S.uf+', com '+S.perda+'% de perda'}
+
+/* eventos */
+function val(t){return t.type=='checkbox'?(t.checked?1:0):(t.type=='number'||t.tagName=='SELECT'?Math.max(0,+t.value||0):t.value)}
+document.addEventListener('input',function(e){var t=e.target,d=t.dataset;if(t.type=='number'&&+t.value<0)t.value=0;
+if(d.g){S[d.g]=(d.g=='nome'||d.g=='uf')?t.value:val(t);if(d.g=='uf')prices()}
+else if(d.p){S.pr[d.p]=+t.value||0}
+else if(d.k){var a=S.andares[+d.a];if(d.r!=null)a.cs[+d.r][d.k]=val(t);else a.n=t.value}
+else return;save();ficha()});
+document.addEventListener('click',function(e){var b=e.target.closest('button[data-act]');if(!b)return;var d=b.dataset,a=S.andares[+d.a],act=d.act;
+if(act=='addAnd')S.andares.push({n:(S.andares.length+1)+'º andar',cs:[]});
+else if(act=='delAnd'){if(!confirm('Remover este andar?'))return;S.andares.splice(+d.a,1)}
+else if(act=='addR'){var n=document.getElementById('ps'+d.a).value;a.cs.push(Object.assign(room(n,PRE[n][0],PRE[n][1]),{op:1}))}
+else if(act=='dup'){var r=JSON.parse(JSON.stringify(a.cs[+d.r]));r.nm+=' (cópia)';r.op=1;a.cs.splice(+d.r+1,0,r)}
+else if(act=='del')a.cs.splice(+d.r,1);
+save();rooms();ficha()});
+document.getElementById('rst').onclick=function(){S.pr={};save();prices();ficha()};
+document.getElementById('rs').onclick=function(){if(confirm('Apagar tudo e começar uma nova obra?')){S=fresh();save();all()}};
+document.getElementById('cp').onclick=function(){var c=CUR,s=''+(S.nome||'Orçamento de obra')+' ('+S.uf+')\n\n';
+K.forEach(function(k){if(c.B[k]>0)s+='• '+LB[k][0]+': '+f2(c.B[k])+' '+LB[k][1]+' — '+brl(c.B[k]*pr(k))+'\n'});s+='\nTotal: '+brl(c.tot);
+try{navigator.clipboard.writeText(s).then(function(){alert('Copiado!')},function(){prompt('Copie:',s)})}catch(e){prompt('Copie:',s)}};
+document.addEventListener('keydown',function(e){if(e.target.type=='number'&&(e.key=='-'||e.key=='e'))e.preventDefault()});
+document.addEventListener('toggle',function(e){var t=e.target;if(t.tagName=='DETAILS'&&t.dataset.r!=null){S.andares[+t.dataset.a].cs[+t.dataset.r].op=t.open?1:0;save()}},true);
+var $=function(i){return document.getElementById(i)},RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+var TM=['auto','light','dark'],TL={auto:'Auto',light:'Claro',dark:'Escuro'},tcur='auto';
+function setT(t){tcur=t;var r=document.documentElement;if(t=='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',t);$('tg').textContent=TL[t];try{localStorage.setItem('obra_tema',t)}catch(e){}}
+$('tg').onclick=function(){setT(TM[(TM.indexOf(tcur)+1)%3])};
+var T0='auto';try{T0=localStorage.getItem('obra_tema')||'auto'}catch(e){}setT(T0);
+var cur=0,tw=0;
+function setTot(v){var id=++tw,from=cur,t0=performance.now();function f(t){if(id!=tw)return;var k=RM?1:Math.min((t-t0)/550,1),x=from+(v-from)*(1-Math.pow(1-k,3));cur=x;$('ht').textContent=brl(x);$('bt').textContent=brl(x);if(k<1)requestAnimationFrame(f)}requestAnimationFrame(f)}
+var root=document.documentElement,tk=0;root.classList.add('js');
+function sc(){tk=0;var y=scrollY;if(!RM)root.style.setProperty('--y',Math.min(y,1200));$('dock').classList.toggle('show',y>240)}
+addEventListener('scroll',function(){if(!tk)tk=requestAnimationFrame(sc)},{passive:true});sc();
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('main>*').forEach(function(el){el.classList.add('rv');io.observe(el)});
+function all(){cfg();prices();rooms();ficha()}all();
+</script></main></body></html>
